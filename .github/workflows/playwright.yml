@@ -23,7 +23,7 @@ jobs:
       run: |
         docker run -d -p 3000:3000 bkimminich/juice-shop
         # Give the container 15 seconds to actually start the web server
-        sleep 15 
+        sleep 60
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
