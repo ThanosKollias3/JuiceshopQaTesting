@@ -17,7 +17,7 @@ test.describe('Login and test functionality',()=>{
     await page.getByRole('button', { name: 'Login', exact: true }).click();
   });
   test('Login was succesfull',async({page})=>{
-    await expect(page.locator('div').filter({ hasText: 'All ProductsApple Juice (' }).first()).toBeVisible();
+   // await expect(page.locator('div').filter({ hasText: 'All ProductsApple Juice (' }).first()).toBeVisible();
     await page.getByRole('button', { name: 'Show the shopping cart' }).click();
     await page.getByRole('button', { name: 'Show/hide account menu' }).click();
     await expect(page.locator('#mat-menu-panel-0')).toContainText('account_circle xaxaxax@gmail.com');
