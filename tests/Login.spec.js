@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import {USERS} from './UsersFile.js';
 
 test.describe('Login and test functionality',()=>{
 
@@ -15,8 +16,8 @@ test.describe('Login and test functionality',()=>{
     await page.getByRole('menuitem',{name: 'Go to login page'}).click();
     
     // Fill credentials
-    await page.getByRole('textbox', { name: 'Text field for the login email' }).fill('xaxaxax@gmail.com');
-    await page.getByRole('textbox', { name: 'Text field for the login password' }).fill('11111');
+    await page.getByRole('textbox', { name: 'Text field for the login email' }).fill(USERS.STANDARD_USER.email);
+    await page.getByRole('textbox', { name: 'Text field for the login password' }).fill(USERS.STANDARD_USER.password);
     await page.getByRole('button', { name: 'Login', exact: true }).click();
 
     // FIX: Assert login success before finishing the hook

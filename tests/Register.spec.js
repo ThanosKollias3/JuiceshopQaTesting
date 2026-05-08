@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import {USERS} from './UsersFile.js';
 
 test('Register Was succesfull', async ({ page }) => {
     //await page.pause();
@@ -13,8 +14,8 @@ test('Register Was succesfull', async ({ page }) => {
     await page.getByRole('menuitem', { name: 'Go to login page' }).click();
     await page.locator('#newCustomerLink').click();
     //Fill in New User Credentials
-    await page.getByRole('textbox', { name: 'Email address field' }).fill('xaxaxax@gmail.com');
-    await page.getByRole('textbox', { name: 'Field for the password' }).fill('11111');
+    await page.getByRole('textbox', { name: 'Email address field' }).fill(USERS.STANDARD_USER.email);
+    await page.getByRole('textbox', { name: 'Field for the password' }).fill(USERS.STANDARD_USER.password);
 
     await page.getByText('Repeat Password').click();
     await page.getByRole('textbox', { name: 'Field to confirm the password' }).fill('11111');
