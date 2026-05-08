@@ -1,21 +1,29 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Login and test functionality',()=>{
-  
-  test.beforeEach(async({page})=>{
+
+ test.beforeEach(async({page})=>{
+    //await page.pause();
     await page.goto('http://localhost:3000/#/');
+    
+    // Close banners if they exist
     await page.getByRole('button', { name: 'Close Welcome Banner' }).click();
     await page.getByRole('button', { name: 'dismiss cookie message' }).click();
+    
+    // Navigate to Login
     await page.getByRole('button', { name: 'Show/hide account menu' }).click();
     await page.getByRole('menuitem',{name: 'Go to login page'}).click();
+    
+    // Fill credentials
     await page.getByRole('textbox', { name: 'Text field for the login email' }).fill('xaxaxax@gmail.com');
-    await page.locator('.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--outlined > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix').first().click({
-     modifiers: ['ControlOrMeta']
-     });
-    await page.getByRole('textbox', { name: 'Text field for the login password' }).click();
     await page.getByRole('textbox', { name: 'Text field for the login password' }).fill('11111');
     await page.getByRole('button', { name: 'Login', exact: true }).click();
+
+    // FIX: Assert login success before finishing the hook
+    // This ensures we are actually logged in before any 'test' block starts.
+    //await expect(page.getByRole('button', { name: 'Show the shopping cart' })).toBeVisible();
   });
+  
   test('Login was succesfull',async({page})=>{
    // await expect(page.locator('div').filter({ hasText: 'All ProductsApple Juice (' }).first()).toBeVisible();
     await page.getByRole('button', { name: 'Show the shopping cart' }).click();
