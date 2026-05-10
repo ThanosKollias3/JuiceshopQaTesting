@@ -38,15 +38,15 @@ export class HomePage {
     await this.accountMenuBtn.click();
   }
 
-  async openBasket() {
-    await this.cartBtn.click();
-  }
-
+  
   async addProductToBasket(productName) {
     await this.page
-      .locator('mat-card')
-      .filter({ has: this.page.locator('.item-name', { hasText: productName }) })
-      .getByLabel('Add to Basket')
-      .click();
+    .locator('mat-card')
+    .filter({ has: this.page.locator('.item-name', { hasText: productName }) })
+    .getByLabel('Add to Basket')
+    .click();
+  }
+  async openBasket() {
+    await this.cartBtn.click();
   }
 }
