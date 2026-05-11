@@ -27,7 +27,7 @@ jobs:
     - name: Install Newman
       run: npm install -g newman newman-reporter-htmlextra
     - name: Run Newman Api tests
-      run: newman run postman/JuiceShop.postman_collection.json  -e envV -r htmlextra
+      run: newman run postman/JuiceShop.postman_collection.json  -e postman/envV.json -r htmlextra
     - uses: actions/upload-artifact@v4
       with: 
         name: newman-report
