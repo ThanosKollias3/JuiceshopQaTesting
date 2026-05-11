@@ -22,24 +22,35 @@ jobs:
     - name: Start Juice Shop Docker
       run: |
         docker run -d -p 3000:3000 bkimminich/juice-shop
-        # Give the container 15 seconds to actually start the web server
         sleep 60
+
+    - name: Wait for Juice Shop to be ready
+      run: |
+        echo "Waiting for Juice Shop..."
+        timeout 120 bash -c 'until curl -f http://localhost:3000 > /dev/null 2>&1; do sleep 2; done' || true
+        echo "Juice Shop is up!"
+
     - name: Install Newman
       run: npm install -g newman newman-reporter-htmlextra
-    - name: Run Newman Api tests
-      run: newman run postman/JuiceShop.postman_collection.json  -e postman/envV.json -r htmlextra
+
+    - name: Run Newman API tests
+      run: |
+        newman run postman/JuiceShop.postman_collection.json \
+          -e postman/envV.json \
+          -r cli,htmlextra \
+          --reporter-htmlextra-export newman-report.html
+
     - uses: actions/upload-artifact@v4
+      if: always()
       with: 
         name: newman-report
         path: newman-report.html
-
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
     - name: Run Playwright tests
-      run: |
-        npx playwright test 
+      run: npx playwright test 
 
     - uses: actions/upload-artifact@v4
       if: always()
