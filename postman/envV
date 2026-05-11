@@ -1,6 +1,6 @@
 {
 	"id": "f2f28c9d-f2fa-4cca-876f-a964639f1cdc",
-	"name": "JuiceShopEnvironmentVars",
+	"name": "envV",
 	"values": [
 		{
 			"key": "baseURL",
