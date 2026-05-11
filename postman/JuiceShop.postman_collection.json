@@ -1,0 +1,315 @@
+{
+  "info": {
+    "_postman_id": "7f4670b8-fa6d-4d73-ad90-cf0e6cc0bb8e",
+    "name": "JuiceShop",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53938576",
+    "_collection_link": "https://go.postman.co/collection/53938576-7f4670b8-fa6d-4d73-ad90-cf0e6cc0bb8e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "PostAuth",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{BearerToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}",
+          "host": [
+            "{{baseURL}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "//pm.collectionVariables.set(\"token\",);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{BearerToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"xaxaxax@gmail.com\",\r\n    \"password\":\"11111\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}",
+          "host": [
+            "{{baseURL}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetProducts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{BearerToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/rest/products/search",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "rest",
+            "products",
+            "search"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PostProduct",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Check the Product\",function (){\r",
+              "    response = pm.response.json();\r",
+              "    pm.expect(response.status).to.eql(\"success\");\r",
+              "    pm.expect(response.data.id).to.be.a(\"number\");\r",
+              "    //pm.expect(response.data.id).to.eql(10);\r",
+              "    pm.expect(response.data.ProductId).to.be.a(\"number\");\r",
+              "    pm.expect(response.data.BasketId).to.eql(\"6\");  \r",
+              "});\r",
+              "/*\r",
+              "const id = response.data.id; \r",
+              "pm.collectionVariables.set(\"id\",id);\r",
+              "*/"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{BearerToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "language=en; welcomebanner_status=dismiss; cookieconsent_status=dismiss; continueCode=O3VMEvaDgyX8LvJ4qo7EwW6m29xP0pOGzRkZKY1bB3MNjOVprl5QenrK4a2x; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MjMsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJ4YXhheGF4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYjBiYWVlOWQyNzlkMzRmYTFkZmQ3MWFhZGI5MDhjM2YiLCJyb2xlIjoiY3VzdG9tZXIiLCJkZWx1eGVUb2tlbiI6IiIsImxhc3RMb2dpbklwIjoiMC4wLjAuMCIsInByb2ZpbGVJbWFnZSI6Ii9hc3NldHMvcHVibGljL2ltYWdlcy91cGxvYWRzL2RlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImlzQWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDI2LTA1LTA0IDIxOjI5OjI3LjkxMyArMDA6MDAiLCJ1cGRhdGVkQXQiOiIyMDI2LTA1LTA0IDIxOjI5OjI3LjkxMyArMDA6MDAiLCJkZWxldGVkQXQiOm51bGx9LCJpYXQiOjE3Nzc5MzAxNzR9.F_PUgPfEeioHgTZVZ83dPCzPw4YWOmPqIFJBkte4Z-FtJgEdUapciSi2of0noN8U9kUTDst0jSfeownuFeab0oh2B3HEUgoOUHNGXNTy6ji8VVdVRYpDbzEW3rS0eoYDVviNSqKp45DsK_4L8DlNDdeI7kwuG1hFonWt1CUIAHM",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"BasketId\":\"6\",\r\n    \"ProductId\":1,\r\n    \"quantity\":1\r\n    }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/BasketItems",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "BasketItems"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddTheSameProductToBasket",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{BearerToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"quantity\": 2}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/BasketItems/{{id}}",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "BasketItems",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": ""
+    },
+    {
+      "key": "BearerToken",
+      "value": ""
+    },
+    {
+      "key": "id",
+      "value": ""
+    }
+  ]
+}

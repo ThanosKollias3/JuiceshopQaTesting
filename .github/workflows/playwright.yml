@@ -24,6 +24,15 @@ jobs:
         docker run -d -p 3000:3000 bkimminich/juice-shop
         # Give the container 15 seconds to actually start the web server
         sleep 60
+    - name: Install Newman
+      run: npm install -g newman newman-reporter-htmlextra
+    - name: Run Newman Api tests
+      run: newman run JuiceShop.postman_collection.json  -e envV -r htmlextra
+    - uses: actions/upload-artifact@v4
+      with: 
+        name: newman-report
+        path: newman-report.html
+
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
