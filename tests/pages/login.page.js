@@ -4,7 +4,7 @@ export class LoginPage {
     this.emailInput = page.getByRole('textbox', { name: 'Text field for the login email' });
     this.passwordInput = page.getByRole('textbox', { name: 'Text field for the login password' });
     this.loginBtn = page.getByRole('button', { name: 'Login', exact: true });
-    this.errorMessage = page.locator('.error.ng-star-inserted');
+    this.errorMessage = page.getByText('Invalid email or password.');
     this.newCustomerLink = page.locator('#newCustomerLink');
   }
 
