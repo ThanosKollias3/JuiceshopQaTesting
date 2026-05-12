@@ -171,6 +171,8 @@
               "    pm.expect(response.data.ProductId).to.be.a(\"number\");\r",
               "    pm.expect(response.data.BasketId).to.eql(\"6\");  \r",
               "});\r",
+              "let productId = pm.response.json();\r",
+              "pm.environment.set(\"ProductId\", productId.data.id);  \r",
               ""
             ],
             "type": "text/javascript",
@@ -268,6 +270,159 @@
           "path": [
             "api",
             "BasketItems",
+            "{{basketId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetBasketDetails",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Check Products in Basket\",function (){\r",
+              "    response = pm.response.json();\r",
+              "    pm.expect(response.status).to.eql(\"success\");\r",
+              "    pm.expect(response.data.id).to.be.a(\"number\");\r",
+              "  \r",
+              "   \r",
+              "    const basketId= pm.environment.get(\"basketId\");  \r",
+              "    pm.expect(response.data.id).to.eql(basketId);  \r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseURL}}/rest/basket/{{basketId}}",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "rest",
+            "basket",
+            "{{basketId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "RemoveItemFromBasket",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"quantity\": 2}"
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/BasketItems/{{ProductId}}",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "BasketItems",
+            "{{ProductId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetBasketAfterProductDeletion",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Check Basket is Empty\",function (){\r",
+              "    response = pm.response.json();\r",
+              "    pm.expect(response.status).to.eql(\"success\");\r",
+              "    pm.expect(response.data.id).to.be.a(\"number\");\r",
+              "  \r",
+              "   \r",
+              "    var productArray = response.data.Products;\r",
+              "    pm.expect(productArray.length).to.eql(0);  \r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/rest/basket/{{basketId}}",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "rest",
+            "basket",
             "{{basketId}}"
           ]
         }
