@@ -8,14 +8,14 @@
   },
   "item": [
     {
-      "name": "PostAuth",
+      "name": "RegisterUser",
       "event": [
         {
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Status code is 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -26,20 +26,13 @@
       ],
       "request": {
         "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{BearerToken}}",
-              "type": "string"
-            }
-          ]
+          "type": "noauth"
         },
         "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "",
+          "raw": "{\r\n    \"email\":\"xaxaxax@gmail.com\",\r\n    \"password\":\"11111\",\r\n    \"passwordRepeat\":\"11111\",\r\n    \"securityQuestion\":\r\n    {   \r\n        \"id\":2,\r\n        \"question\":\"Mother's maiden name?\",\r\n        \"createdAt\":\"2026-05-12T17:08:44.124Z\",\r\n        \"updatedAt\":\"2026-05-12T17:08:44.124Z\"\r\n    },\r\n    \"securityAnswer\":\"hi\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -47,9 +40,13 @@
           }
         },
         "url": {
-          "raw": "{{baseURL}}",
+          "raw": "{{baseURL}}/api/Users",
           "host": [
             "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "Users"
           ]
         }
       },
@@ -65,7 +62,11 @@
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
               "});\r",
-              "//pm.collectionVariables.set(\"token\",);"
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.environment.set(\"token\",response.authentication.token);\r",
+              "pm.environment.set(\"basketId\",response.authentication.bid);\r",
+              ""
             ],
             "type": "text/javascript",
             "packages": {},
@@ -75,11 +76,16 @@
       ],
       "request": {
         "auth": {
-          "type": "bearer",
-          "bearer": [
+          "type": "basic",
+          "basic": [
             {
-              "key": "token",
-              "value": "{{BearerToken}}",
+              "key": "password",
+              "value": "11111",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "xaxaxax@gmail.com",
               "type": "string"
             }
           ]
@@ -96,9 +102,14 @@
           }
         },
         "url": {
-          "raw": "{{baseURL}}",
+          "raw": "{{baseURL}}/rest/user/login",
           "host": [
             "{{baseURL}}"
+          ],
+          "path": [
+            "rest",
+            "user",
+            "login"
           ]
         }
       },
@@ -124,14 +135,7 @@
       ],
       "request": {
         "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{BearerToken}}",
-              "type": "string"
-            }
-          ]
+          "type": "noauth"
         },
         "method": "GET",
         "header": [],
@@ -163,14 +167,11 @@
               "    response = pm.response.json();\r",
               "    pm.expect(response.status).to.eql(\"success\");\r",
               "    pm.expect(response.data.id).to.be.a(\"number\");\r",
-              "    //pm.expect(response.data.id).to.eql(10);\r",
+              "  \r",
               "    pm.expect(response.data.ProductId).to.be.a(\"number\");\r",
               "    pm.expect(response.data.BasketId).to.eql(\"6\");  \r",
               "});\r",
-              "/*\r",
-              "const id = response.data.id; \r",
-              "pm.collectionVariables.set(\"id\",id);\r",
-              "*/"
+              ""
             ],
             "type": "text/javascript",
             "packages": {},
@@ -184,7 +185,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "{{BearerToken}}",
+              "value": "{{token}}",
               "type": "string"
             }
           ]
@@ -200,7 +201,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"BasketId\":\"6\",\r\n    \"ProductId\":1,\r\n    \"quantity\":1\r\n    }",
+          "raw": "{\r\n    \"BasketId\":\"6\",\r\n    \"ProductId\":1,\r\n    \"quantity\":1\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -243,7 +244,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "{{BearerToken}}",
+              "value": "{{token}}",
               "type": "string"
             }
           ]
@@ -260,14 +261,14 @@
           }
         },
         "url": {
-          "raw": "{{baseURL}}/api/BasketItems/{{id}}",
+          "raw": "{{baseURL}}/api/BasketItems/{{basketId}}",
           "host": [
             "{{baseURL}}"
           ],
           "path": [
             "api",
             "BasketItems",
-            "{{id}}"
+            "{{basketId}}"
           ]
         }
       },

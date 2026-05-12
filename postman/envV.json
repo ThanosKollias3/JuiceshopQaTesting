@@ -9,20 +9,20 @@
 			"enabled": true
 		},
 		{
-			"key": "BearerToken",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MjMsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJ4YXhheGF4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYjBiYWVlOWQyNzlkMzRmYTFkZmQ3MWFhZGI5MDhjM2YiLCJyb2xlIjoiY3VzdG9tZXIiLCJkZWx1eGVUb2tlbiI6IiIsImxhc3RMb2dpbklwIjoiIiwicHJvZmlsZUltYWdlIjoiL2Fzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiaXNBY3RpdmUiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDUtMTEgMTY6NDk6MzIuMjE2ICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMjYtMDUtMTEgMTY6NDk6MzcuMzk5ICswMDowMCIsImRlbGV0ZWRBdCI6bnVsbH0sImlhdCI6MTc3ODUxODE4NH0.By6UJShABgFEFUrZpt9RMkfF0oGjmYEW6KeUHXqkKg8xuIj1BQRenv8E72OPFYA-wJnJSHybM77U0iyPHVA8IV2L9L5p1PfRWbdX-e9taUtz2X0bzVURatkdHi0KMY3BsZ4Q7xtm-d0NYeECm3qlqjk88NmOd1_YaJQ8j0hRinQ",
-			"type": "default",
+			"key": "token",
+			"value": "",
+			"type": "any",
 			"enabled": true
 		},
 		{
-			"key": "id",
-			"value": "1",
-			"type": "default",
+			"key": "basketId",
+			"value": "",
+			"type": "any",
 			"enabled": true
 		}
 	],
 	"color": null,
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2026-05-11T17:20:19.434Z",
-	"_postman_exported_using": "Postman/12.9.7"
+	"_postman_exported_at": "2026-05-12T19:11:12.237Z",
+	"_postman_exported_using": "Postman/12.10.1"
 }
