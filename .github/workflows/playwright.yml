@@ -49,7 +49,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
-    - name: Run Playwright tests Register Test First
+    - name: Run Playwright Register Test First
       run: npx playwright test --grep @register
 
     - name: Run Playwright tests
