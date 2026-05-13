@@ -3,7 +3,7 @@ import { USERS } from './fixtures/UsersFile.js';
 import { HomePage } from './pages/home.page.js';
 import { LoginPage } from './pages/login.page.js';
 
-test.describe('Login functionality', () => {
+test.describe('Login functionality @login', () => {
   let homePage;
   let loginPage;
 

@@ -4,7 +4,7 @@ import { HomePage } from './pages/home.page.js';
 import { LoginPage } from './pages/login.page.js';
 import { BasketPage } from './pages/basket.page.js';
 
-test.describe('Basket Functionality', () => {
+test.describe('Basket Functionality @basket', () => {
   let homePage;
   let loginPage;
   let basketPage;
