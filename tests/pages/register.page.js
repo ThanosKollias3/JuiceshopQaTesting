@@ -11,8 +11,15 @@ export class RegisterPage {
   }
 
   async selectSecurityQuestion(questionRegex) {
-    await this.securityQuestionDropdown.click();
-    await this.page.getByRole('option', { name: questionRegex }).first().click({ force: true });
+    // Use keyboard interaction instead of click to avoid Material label overlap
+    await this.securityQuestionDropdown.focus();
+    await this.page.keyboard.press('Space');
+    
+    // Wait for dropdown to open
+    await this.page.waitForSelector('[role="listbox"]', { state: 'visible' });
+    
+    // Select the option
+    await this.page.getByRole('option', { name: questionRegex }).first().click();
   }
 
   async register({ email, password, repeatPassword, securityQuestion, securityAnswer }) {
@@ -25,6 +32,10 @@ export class RegisterPage {
   }
 
   async isEmailAlreadyRegistered() {
-    return await this.emailExistsError.isVisible();
+    try {
+      return await this.emailExistsError.isVisible({ timeout: 3000 });
+    } catch {
+      return false;
+    }
   }
 }
