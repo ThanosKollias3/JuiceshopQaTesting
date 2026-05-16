@@ -7,6 +7,10 @@ test.describe('Login functionality @login', () => {
   let homePage;
   let loginPage;
 
+  test.use({storageState: {
+                            cookies:[],
+                            origin:[]
+                          }});
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
     loginPage = new LoginPage(page);

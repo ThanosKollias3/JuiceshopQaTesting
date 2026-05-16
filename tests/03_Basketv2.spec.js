@@ -11,13 +11,24 @@ test.describe('Basket Functionality @basket', () => {
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
-    loginPage = new LoginPage(page);
     basketPage = new BasketPage(page);
 
-    await homePage.goto();
-    await homePage.dismissBanners();
-    await homePage.openLoginPage();
-    await loginPage.login(USERS.STANDARD_USER);
+    await page.goto('http://localhost:3000/#/');
+    await page.waitForLoadState('networkidle');
+
+    // Clear any basket items left over from previous runs
+    const token = await page.evaluate(() => localStorage.getItem('token'));
+    const headers = { Authorization: `Bearer ${token}` };
+    const res = await page.request.get('http://localhost:3000/rest/basket', { headers });
+    if (res.ok()) {
+      const { data } = await res.json();
+      for (const product of data?.Products ?? []) {
+        await page.request.delete(
+          `http://localhost:3000/api/BasketItems/${product.BasketItem.id}`,
+          { headers }
+        );
+      }
+    }
   });
 
   test('Login was successful', async () => {
@@ -28,8 +39,14 @@ test.describe('Basket Functionality @basket', () => {
 
   test('Checking Basket Functionality', async () => {
     await homePage.addProductToBasket('Apple Juice (1000ml)');
+    await expect(homePage.cartBadge).toHaveText('1');
+
     await homePage.addProductToBasket('Apple Pomace'); // adjust names to real products
+    await expect(homePage.cartBadge).toHaveText('2');
+
     await homePage.addProductToBasket('Eggfruit Juice (500ml)');
+    await expect(homePage.cartBadge).toHaveText('3');
+
     await homePage.openBasket();
     await basketPage.backToHome();
     await homePage.addProductToBasket('Apple Pomace');

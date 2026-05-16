@@ -40,11 +40,20 @@ export class HomePage {
 
   
   async addProductToBasket(productName) {
+    const responsePromise = this.page.waitForResponse(
+      response =>
+        response.url().includes('/api/BasketItems') &&
+        ['POST', 'PUT'].includes(response.request().method()) &&
+        response.status() === 200
+    );
+
     await this.page
-    .locator('mat-card')
-    .filter({ has: this.page.locator('.item-name', { hasText: productName }) })
-    .getByLabel('Add to Basket')
-    .click();
+      .locator('mat-card')
+      .filter({ has: this.page.locator('.item-name', { hasText: productName }) })
+      .getByLabel('Add to Basket')
+      .click();
+
+    await responsePromise;
   }
   async openBasket() {
     await this.cartBtn.click();

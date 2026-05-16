@@ -8,6 +8,12 @@ test.describe('Register functionality @register', () => {
   let registerPage;
   let homePage;
   let loginPage;
+  
+  test.use({storageState: {
+                            cookies:[],
+                            origins:[]
+                          }});
+
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
@@ -30,6 +36,7 @@ test.describe('Register functionality @register', () => {
 
     // Check if user already exists
     if (await registerPage.isEmailAlreadyRegistered()) {
+      console.log('User Already existed Skipping this test');
       test.skip(true, 'User already exists. Skipping registration.');
       return;
     }
