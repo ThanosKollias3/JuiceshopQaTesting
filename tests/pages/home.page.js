@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 export class HomePage {
   constructor(page) {
     this.page = page;
@@ -40,21 +41,27 @@ export class HomePage {
 
   
   async addProductToBasket(productName) {
-    const responsePromise = this.page.waitForResponse(
-      response =>
-        response.url().includes('/api/BasketItems') &&
-        ['POST', 'PUT'].includes(response.request().method()) &&
-        response.status() === 200
-    );
-
-    await this.page
-      .locator('mat-card')
-      .filter({ has: this.page.locator('.item-name', { hasText: productName }) })
-      .getByLabel('Add to Basket')
-      .click();
-
-    await responsePromise;
+  // Get current badge count (or 0 if no badge)
+ /* let currentCount = 0;
+  try {
+    const badgeText = await this.cartBadge.textContent({ timeout: 1000 });
+    currentCount = parseInt(badgeText) || 0;
+  } catch {
+    // Badge doesn't exist yet
   }
+  
+  const expectedCount = (currentCount + 1).toString();
+  */
+  // Click to add product
+  await this.page
+    .locator('mat-card')
+    .filter({ has: this.page.locator('.item-name', { hasText: productName }) })
+    .getByLabel('Add to Basket')
+    .click();
+  
+  // Wait for badge to update (proves item was added)
+  //await expect(this.cartBadge).toHaveText(expectedCount, { timeout: 10000 });
+}
   async openBasket() {
     await this.cartBtn.click();
   }

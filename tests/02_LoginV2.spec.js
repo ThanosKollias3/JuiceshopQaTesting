@@ -9,7 +9,7 @@ test.describe('Login functionality @login', () => {
 
   test.use({storageState: {
                             cookies:[],
-                            origin:[]
+                            origins:[]
                           }});
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
