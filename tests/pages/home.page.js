@@ -41,26 +41,17 @@ export class HomePage {
 
   
   async addProductToBasket(productName) {
-  // Get current badge count (or 0 if no badge)
- /* let currentCount = 0;
-  try {
-    const badgeText = await this.cartBadge.textContent({ timeout: 1000 });
-    currentCount = parseInt(badgeText) || 0;
-  } catch {
-    // Badge doesn't exist yet
-  }
+ await this.page.waitForSelector('.item-name', { state: 'visible', timeout: 10000 });
   
-  const expectedCount = (currentCount + 1).toString();
-  */
-  // Click to add product
-  await this.page
+  const productCard = this.page
     .locator('mat-card')
-    .filter({ has: this.page.locator('.item-name', { hasText: productName }) })
-    .getByLabel('Add to Basket')
-    .click();
+    .filter({ has: this.page.locator('.item-name', { hasText: productName }) });
   
-  // Wait for badge to update (proves item was added)
-  //await expect(this.cartBadge).toHaveText(expectedCount, { timeout: 10000 });
+  // Scroll into view (might be off-screen in CI)
+  await productCard.scrollIntoViewIfNeeded();
+  
+  // Click button
+  await productCard.getByLabel('Add to Basket').click();
 }
   async openBasket() {
     await this.cartBtn.click();

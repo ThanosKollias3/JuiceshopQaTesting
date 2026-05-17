@@ -27,6 +27,7 @@ export class AccountModal{
   }
   async navigateToUserProfile(){
     await this.userProfile.click();
+    await this.page.waitForURL('/**/profile', { timeout: 10000 });
   }
 
   async navigateToPaymentMenu(){

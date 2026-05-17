@@ -34,7 +34,9 @@ test.describe('Account Modal Functionality @account', () => {
     await expect(page.locator('.mat-mdc-menu-panel')).toBeVisible();
 
     await accountModal.navigateToUserProfile();
+    
     await expect(page.locator('h1')).toHaveText('User Profile');
+
 
   });
 
